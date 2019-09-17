@@ -28,7 +28,7 @@ module MiniMagick
           send("execute_#{MiniMagick.shell_api.gsub("-", "_")}", command, options)
         end
 
-      [stdout, stderr, status.exitstatus]
+      [stdout, stderr, status&.exitstatus || 127]
     rescue Errno::ENOENT, IOError
       ["", "executable not found: \"#{command.first}\"", 127]
     end

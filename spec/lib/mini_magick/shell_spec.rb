@@ -15,6 +15,11 @@ RSpec.describe MiniMagick::Shell do
       expect(output).to eq ["stdout", "stderr", 0]
     end
 
+    it "can handle cases where command isn't executed" do
+      allow(subject).to receive(:log)
+      expect(subject.execute(%w[ foo ])).to eq [nil, nil, 127]
+    end
+
     it "uses stderr for error messages" do
       allow(subject).to receive(:execute).and_return(["", "stderr", 1])
       expect { subject.run(%W[foo]) }
